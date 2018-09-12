@@ -165,8 +165,18 @@ namespace ctm
 				-2, 5, -14, 3,
 				5, -9, 1, -2,
 				3, 4, 17, -9 };
-		math::mat4.inverse(m41, m4);
-		math::mat4.squareMultiply(m41, m4, m41);
+		//math::mat4.inverse(m41, m4);
+		//math::mat4.squareMultiply(m41, m4, m41);
+		int anglex = rand() % 360, angley = rand() % 360, anglez = rand() % 360;
+		std::cout << "x:" << anglex << " " << (double)((__float128)anglex / (__float128)180 * M_PIq) << std::endl;
+		std::cout << "y:" << angley << " " << (double)((__float128)angley / (__float128)180 * M_PIq) << std::endl;
+		std::cout << "z:" << anglez << " " << (double)((__float128)anglez / (__float128)180 * M_PIq) << std::endl;
+		m41 = m4;
+		//math::mat4.rotateX(m41, m41, (__float128)anglex / (__float128)180 * M_PIq);
+		//math::mat4.rotateY(m41, m41, (__float128)angley / (__float128)180 * M_PIq);
+		__float128 angles[] { (__float128)anglex / (__float128)180 * M_PIq, (__float128)angley / (__float128)180 * M_PIq };
+		math::mat4.rotateXY(m41, m41, angles);
+		math::mat4.rotateZ(m41, m41, (__float128)anglez / (__float128)180 * M_PIq);
 		for(int i = 0; i < 16; i++)
 		{
 			char s[10];
