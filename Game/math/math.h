@@ -10,7 +10,7 @@
 class vectormath
 {
 	public:
-		const int dimensions;
+		int dimensions;
 
 		vectormath(const int dimensions);
 		virtual ~vectormath();
@@ -124,8 +124,8 @@ class vectormath
 class matrixmath
 {
 	public:
-		const int rows;
-		const int columns;
+		int rows;
+		int columns;
 
 		matrixmath(const int rows, const int columns);
 		virtual ~matrixmath();
