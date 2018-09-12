@@ -9,13 +9,11 @@
 
 class vectormath
 {
-	private:
-		int vectordimensions;
 	public:
-		vectormath(int dimensions);
-		virtual ~vectormath();
+		const int dimensions;
 
-		virtual int dimensions();
+		vectormath(const int dimensions);
+		virtual ~vectormath();
 
 		virtual char* newVectorI8();
 		virtual short* newVectorI16();
@@ -125,15 +123,12 @@ class vectormath
 };
 class matrixmath
 {
-	private:
-		int matrixrows;
-		int matrixcolumns;
 	public:
-		matrixmath(int rows, int columns);
-		virtual ~matrixmath();
+		const int rows;
+		const int columns;
 
-		virtual int rows() final;
-		virtual int columns() final;
+		matrixmath(const int rows, const int columns);
+		virtual ~matrixmath();
 
 		virtual char* newMatrixI8();
 		virtual short* newMatrixI16();
