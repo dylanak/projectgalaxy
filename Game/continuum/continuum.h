@@ -1,14 +1,12 @@
-/*
- * PJGmonitorinfo.h
- *
- *  Created on: Jul 23, 2018
- *      Author: SYSTEM
- */
-
 #ifndef CONTINUUM_H_
 #define CONTINUUM_H_
 
+#define GLFW_DLL
+#include <iostream>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "../test.h"
+#include "../math/math.h"
 
 namespace ctm
 {

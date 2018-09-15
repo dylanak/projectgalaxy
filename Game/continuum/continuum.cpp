@@ -1,18 +1,4 @@
-
-/*
- * projectgalaxy.cpp
- *
- *  Created on: Jul 23, 2018
- *      Author: SYSTEM
- */
-
-#define GLFW_DLL
-
-#include <iostream>
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 #include "continuum.h"
-#include "math/math.h"
 
 using namespace ctm;
 
@@ -151,42 +137,7 @@ namespace ctm
 		}
 		std::cout << this->openGLVersionMajor << std::endl;
 		std::cout << this->openGLVersionMinor << std::endl;
-		__float128 e = 0;
-		__float128 m2[] = { 4, 3, 2, 5 };
-		__float128* m41 = math::mat4.newMatrixF128();
-		__float128 m3[] =
-		{
-				6, 8, 10,
-				-3, -1, 2,
-				3, -7, 13
-		};
-		__float128 m4[] = {
-				/*4*/0, 3, 2, -8,
-				-2, 5, -14, 3,
-				5, -9, 1, -2,
-				3, 4, 17, -9 };
-		//math::mat4.inverse(m41, m4);
-		//math::mat4.squareMultiply(m41, m4, m41);
-		int anglex = rand() % 360, angley = rand() % 360, anglez = rand() % 360;
-		std::cout << "x:" << anglex << " " << (double)((__float128)anglex / (__float128)180 * M_PIq) << std::endl;
-		std::cout << "y:" << angley << " " << (double)((__float128)angley / (__float128)180 * M_PIq) << std::endl;
-		std::cout << "z:" << anglez << " " << (double)((__float128)anglez / (__float128)180 * M_PIq) << std::endl;
-		m41 = m4;
-		//math::mat4.rotateX(m41, m41, (__float128)anglex / (__float128)180 * M_PIq);
-		//math::mat4.rotateY(m41, m41, (__float128)angley / (__float128)180 * M_PIq);
-		__float128 angles[] { (__float128)anglex / (__float128)180 * M_PIq, (__float128)angley / (__float128)180 * M_PIq };
-		math::mat4.rotateXY(m41, m41, angles);
-		math::mat4.rotateZ(m41, m41, (__float128)anglez / (__float128)180 * M_PIq);
-		for(int i = 0; i < 16; i++)
-		{
-			char s[10];
-			quadmath_snprintf(s, 10, "%.36Qg", m41[i]);
-			//std::cout << s << std::endl;
-			std::cout << (double)m41[i] << std::endl;
-		}
-		//std::cout << "2x2=" << math::mat2.determinantS(m2) << std::endl;
-		//std::cout << "3x3=" << math::mat3.determinantS(m3) << std::endl;
-		//std::cout << "4x4=" << math::mat4.determinantS(m4) << std::endl;
+		test();
 	};
 
 	continuum::~continuum()
