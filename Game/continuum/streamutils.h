@@ -32,7 +32,7 @@ namespace ctm
 			~byteposition();
 
 			const size_t& getlimit();
-			void setlimit(const size_t& limit);
+			const size_t& setlimit(const size_t& limit);
 
 			operator bitposition&() const;
 			operator const size_t&();
@@ -72,7 +72,7 @@ namespace ctm
 			~bitposition();
 
 			const lsize_t& getlimit();
-			void setlimit(const lsize_t& limit);
+			const lsize_t& setlimit(const lsize_t& limit);
 
 			operator byteposition&() const;
 			operator const lsize_t&();
