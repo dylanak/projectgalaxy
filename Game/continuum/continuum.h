@@ -8,20 +8,26 @@
 #include "../test.h"
 #include "../math/math.h"
 
+int main(int argcount, char** args);
+
 namespace ctm
 {
 	class continuum
 	{
 		private:
-			bool verifiedPJG;
 			GLFWwindow *window;
-		public:
-			continuum();
-			~continuum();
 			int openGLVersionMajor;
 			int openGLVersionMinor;
-			void run();
 
+			continuum();
+			~continuum();
+
+			void run();
+		public:
+			const int& getopenglvmajor() const;
+			const int& getopenglvminor() const;
+
+			friend int ::main(int argcount, char** args);
 	};
 	class CTMrenderer
 	{

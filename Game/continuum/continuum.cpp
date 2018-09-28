@@ -6,7 +6,6 @@ namespace ctm
 {
 	continuum::continuum()
 	{
-		this->verifiedPJG = true;
 		glfwSetErrorCallback([](int error, const char* desc)
 		{
 			//TODO #1" improve logging
@@ -151,11 +150,14 @@ namespace ctm
 
 	};
 
+	const int& continuum::getopenglvmajor() const { return this->openGLVersionMajor; }
+
+	const int& continuum::getopenglvminor() const { return this->openGLVersionMinor; }
 }
 
-int main()
+int main(int argcount, char** args)
 {
-	continuum *ctm = new continuum();
+	continuum* ctm = new continuum();
 	int code = 0;
 	try
 	{
