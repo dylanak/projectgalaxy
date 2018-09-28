@@ -1,3 +1,5 @@
+#ifndef _CTM_STREAMUTILS_H
+#define _CTM_STREAMUTILS_H
 #include <crtdefs.h>
 #include <limits>
 
@@ -88,3 +90,4 @@ namespace ctm
 			friend class byteposition;
 	};
 }
+#endif
