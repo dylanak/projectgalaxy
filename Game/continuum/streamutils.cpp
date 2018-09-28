@@ -10,7 +10,7 @@ byteposition::~byteposition() { this->deconstructing = true; if(!this->bip->deco
 
 void byteposition::update() { if(this->updatepos) { this->pos = this->bip->pos / 8; this->updatepos = false; } if(this->updatelimit) { this->limit = this->bip->limit / 8; this->updatelimit = false; } }
 const size_t& byteposition::getlimit() { this->update(); return this->limit; }
-const size_t& byteposition::setlimit(const size_t& limit) { if((this->updatepos ? this->bip->pos / 8 : this->pos) > limit) { this->updatepos = false; this->pos = limit; this->bip->updatepos = true; } this->limit = limit; this->bip->updatelimit = true; return limit; }
+const size_t& byteposition::setlimit(const size_t& limit) { if(this->limit != limit) { if((this->updatepos ? this->bip->pos / 8 : this->pos) > limit) { this->updatepos = false; this->pos = limit; this->bip->updatepos = true; } this->limit = limit; this->bip->updatelimit = true; } return limit; }
 
 byteposition::operator bitposition&() const { return *(this->bip); }
 byteposition::operator const size_t&() { this->update(); return this->pos; }
@@ -32,7 +32,7 @@ bitposition::~bitposition() { this->deconstructing = true; if(!this->byp->decons
 
 void bitposition::update() { if(this->updatepos) { this->pos = (lsize_t)this->byp->pos * 8; this->updatepos = false; } if(this->updatelimit) { this->limit = (lsize_t)this->byp->limit * 8 + 7; this->updatelimit = false; } }
 const lsize_t& bitposition::getlimit() { this->update(); return this->limit; }
-const lsize_t& bitposition::setlimit(const lsize_t& limit) { this->updatelimit = false; if((this->updatepos ? (lsize_t)this->byp->pos * 8 : this->pos) > limit) { this->updatepos = false; this->pos = limit; this->byp->updatepos = true; } this->limit = limit; this->byp->updatelimit = true; return limit; }
+const lsize_t& bitposition::setlimit(const lsize_t& limit) { if(this->limit != limit) { this->updatelimit = false; if((this->updatepos ? (lsize_t)this->byp->pos * 8 : this->pos) > limit) { this->updatepos = false; this->pos = limit; this->byp->updatepos = true; } this->limit = limit; this->byp->updatelimit = true; } return limit; }
 
 bitposition::operator byteposition&() const { return *(this->byp); }
 bitposition::operator const lsize_t&() { this->update(); return this->pos; }
