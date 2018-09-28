@@ -1,6 +1,3 @@
-#ifndef CONTINUUM_H_
-#define CONTINUUM_H_
-
 #define GLFW_DLL
 #include <iostream>
 #include <GL/glew.h>
@@ -39,6 +36,4 @@ namespace ctm
 		public:
 
 	};
-} /* namespace pjg */
-
-#endif /* CONTINUUM_H_ */
+}

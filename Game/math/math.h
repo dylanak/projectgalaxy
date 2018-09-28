@@ -1,6 +1,3 @@
-#ifndef MATH_H_
-#define MATH_H_
-
 #include <stdlib.h>
 #include <iostream>
 #include <math.h>
@@ -798,4 +795,3 @@ class math
 		static matrix3x3math mat3;
 		static matrix4x4math mat4;
 };
-#endif
