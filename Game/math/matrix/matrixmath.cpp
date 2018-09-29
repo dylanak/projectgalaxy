@@ -1,38 +1,77 @@
 #include "../math.h"
 
-matrixmath::matrixmath(const int rows, const int columns) { this->rows = rows; this->columns = columns; }
+matrixmath::matrixmath(const int& rows, const int& columns) : rows(rows), columns(columns) { }
 matrixmath::~matrixmath() {  }
 
-char* matrixmath::newMatrixI8() { return (char*)calloc(this->rows * this->columns, sizeof(char)); }
-short* matrixmath::newMatrixI16() { return (short*)calloc(this->rows * this->columns, sizeof(short)); }
-int* matrixmath::newMatrixI32() { return (int*)calloc(this->rows * this->columns, sizeof(int)); }
-long long* matrixmath::newMatrixI64() { return (long long*)calloc(this->rows * this->columns, sizeof(long long)); }
-float* matrixmath::newMatrixF32() { return (float*)calloc(this->rows * this->columns, sizeof(float)); }
-double* matrixmath::newMatrixF64() { return (double*)calloc(this->rows * this->columns, sizeof(double)); }
-__float128* matrixmath::newMatrixF128() { return (__float128*)calloc(this->rows * this->columns, sizeof(__float128)); }
+#define CTM_MATH_MROCO const int& rows = this-> rows, columns = this-> columns
 
-char* matrixmath::scalar(char* out, char* matrix, char scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-short* matrixmath::scalar(short* out, char* matrix, short scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-short* matrixmath::scalar(short* out, short* matrix, short scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-int* matrixmath::scalar(int* out, short* matrix, int scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-int* matrixmath::scalar(int* out, int* matrix, int scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-long long* matrixmath::scalar(long long* out, int* matrix, long long scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-long long* matrixmath::scalar(long long* out, long long* matrix, long long scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-float* matrixmath::scalar(float* out, float* matrix, float scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-double* matrixmath::scalar(double* out, float* matrix, double scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-double* matrixmath::scalar(double* out, double* matrix, double scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-__float128* matrixmath::scalar(__float128* out, double* matrix, __float128 scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
-__float128* matrixmath::scalar(__float128* out, __float128* matrix, __float128 scalar) { int rows = this->rows, columns = this->columns; for(int i = 0, row = 0; row < rows; row++) for(int column = 0; column < columns; column++, i++) out[i] = scalar * matrix[i]; return out; }
+#define CTM_MATH_MNEWM(ma0)\
+ma0* matrixmath::newMatrix(const ma0&)\
+{\
+	return (ma0*)calloc(this->rows * this->columns, sizeof(ma0));\
+}
+CTM_MATH_MNEWM(__int8)
+CTM_MATH_MNEWM(__int16)
+CTM_MATH_MNEWM(__int32)
+CTM_MATH_MNEWM(__int64)
+CTM_MATH_MNEWM(__int128)
+CTM_MATH_MNEWM(float)
+CTM_MATH_MNEWM(double)
+CTM_MATH_MNEWM(__float128)
 
-char* matrixmath::multiply(char* out, char* matrix, char* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; char* ret = (char*)calloc(rows * othercolumns, sizeof(char)); char* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-short* matrixmath::multiply(short* out, char* matrix, char* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; short* ret = (short*)calloc(rows * othercolumns, sizeof(short)); char* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-short* matrixmath::multiply(short* out, short* matrix, short* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; short* ret = (short*)calloc(rows * othercolumns, sizeof(short)); short* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-int* matrixmath::multiply(int* out, short* matrix, short* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; int* ret = (int*)calloc(rows * othercolumns, sizeof(int)); short* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-int* matrixmath::multiply(int* out, int* matrix, int* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; int* ret = (int*)calloc(rows * othercolumns, sizeof(int)); int* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-long long* matrixmath::multiply(long long* out, int* matrix, int* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; long long* ret = (long long*)calloc(rows * othercolumns, sizeof(long long)); int* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-long long* matrixmath::multiply(long long* out, long long* matrix, long long* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; long long* ret = (long long*)calloc(rows * othercolumns, sizeof(long long)); long long* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-float* matrixmath::multiply(float* out, float* matrix, float* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; float* ret = (float*)calloc(rows * othercolumns, sizeof(float)); float* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-double* matrixmath::multiply(double* out, float* matrix, float* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; double* ret = (double*)calloc(rows * othercolumns, sizeof(double)); float* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-double* matrixmath::multiply(double* out, double* matrix, double* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; double* ret = (double*)calloc(rows * othercolumns, sizeof(double)); double* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-__float128* matrixmath::multiply(__float128* out, double* matrix, double* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; __float128* ret = (__float128*)calloc(rows * othercolumns, sizeof(__float128)); double* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
-__float128* matrixmath::multiply(__float128* out, __float128* matrix, __float128* matrix1, int size) { int rows = this->rows, columns = this->columns, othercolumns = size / columns; if(size <= 0) return NULL; __float128* ret = (__float128*)calloc(rows * othercolumns, sizeof(__float128)); __float128* ref = matrix; for(int i = 0, r = 0; r < rows; r++, ref += columns) for(int c = 0; c < othercolumns; c++, i++) for(int e = 0; e < columns; e++) ret[i] += ref[e] * matrix1[e * othercolumns + c]; for(int i = 0, r = 0; r < rows; r++) for(int c = 0; c < othercolumns; c++, i++) out[i] = ret[i]; delete ret; return out; }
+#define CTM_MATH_MSCLR(ma0, ma1)\
+ma0* matrixmath::scalar(ma0* out, ma1* matrix, ma0 scalar)\
+{\
+	CTM_MATH_MROCO;\
+	for(int i = 0, row = 0; row < rows; row++)\
+		for(int column = 0; column < columns; column++, i++)\
+			out[i] = scalar * matrix[i];\
+	return out;\
+}
+CTM_MATH_MSCLR(__int8, __int8)
+CTM_MATH_MSCLR(__int16, __int8)
+CTM_MATH_MSCLR(__int16, __int16)
+CTM_MATH_MSCLR(__int32, __int16)
+CTM_MATH_MSCLR(__int32, __int32)
+CTM_MATH_MSCLR(__int64, __int32)
+CTM_MATH_MSCLR(__int64, __int64)
+CTM_MATH_MSCLR(__int128, __int64)
+CTM_MATH_MSCLR(__int128, __int128)
+CTM_MATH_MSCLR(float, float)
+CTM_MATH_MSCLR(double, float)
+CTM_MATH_MSCLR(double, double)
+CTM_MATH_MSCLR(__float128, double)
+CTM_MATH_MSCLR(__float128, __float128)
+
+#define CTM_MATH_MMLTP(ma0, ma1)\
+ma0* matrixmath::multiply(ma0* out, ma1* matrix, ma1* matrix1, int size)\
+{\
+	CTM_MATH_MROCO;\
+	int othercolumns = size / columns;\
+	if(size <= 0) return NULL;\
+	ma0* ret = (ma0*)calloc(rows * othercolumns, sizeof(ma0));\
+	ma1* ref = matrix;\
+	for(int i = 0, r = 0; r < rows; r++, ref += columns)\
+		for(int c = 0; c < othercolumns; c++, i++)\
+			for(int e = 0; e < columns; e++)\
+				ret[i] += ref[e] * matrix1[e * othercolumns + c];\
+	for(int i = 0, r = 0; r < rows; r++)\
+		for(int c = 0; c < othercolumns; c++, i++)\
+			out[i] = ret[i];\
+	delete ret;\
+	return out;\
+}
+CTM_MATH_MMLTP(__int8, __int8)
+CTM_MATH_MMLTP(__int16, __int8)
+CTM_MATH_MMLTP(__int16, __int16)
+CTM_MATH_MMLTP(__int32, __int16)
+CTM_MATH_MMLTP(__int32, __int32)
+CTM_MATH_MMLTP(__int64, __int32)
+CTM_MATH_MMLTP(__int64, __int64)
+CTM_MATH_MMLTP(__int128, __int64)
+CTM_MATH_MMLTP(__int128, __int128)
+CTM_MATH_MMLTP(float, float)
+CTM_MATH_MMLTP(double, float)
+CTM_MATH_MMLTP(double, double)
+CTM_MATH_MMLTP(__float128, double)
+CTM_MATH_MMLTP(__float128, __float128)
