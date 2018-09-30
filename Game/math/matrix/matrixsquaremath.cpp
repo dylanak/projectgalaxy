@@ -104,15 +104,9 @@ ma0 matrixsquaremath::determinant(const ma0&, ma1* matrix)\
 		if(row == rowsandcolumns - 2)\
 		{\
 			int firstColumn = -1, secondColumn = -1;\
-			for(int i = 0; true; i++)\
+			for(int i = 0; firstColumn < 0 || secondColumn < 0; i++)\
 			{\
-				int& r;\
-				if(firstColumn < 0)\
-					r = firstColumn;\
-				else if(secondColumn < 0)\
-					r = secondColumn;\
-				else\
-					break;\
+				int& r = firstColumn < 0 ? firstColumn : secondColumn;\
 				bool free = true;\
 				for(int j = 0; free && j < rowsandcolumns; j++)\
 					free = usedcolumns[j] != i;\
