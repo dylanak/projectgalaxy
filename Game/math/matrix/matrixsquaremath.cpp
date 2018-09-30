@@ -2,13 +2,15 @@
 
 matrixsquaremath::matrixsquaremath(const int& rowsandcolumns) : matrixmath(rowsandcolumns, rowsandcolumns) { }
 
-#define CTM_MATH_MROCO const int& rowsandcolumns = this->rows
+#ifndef CTM_MATH_MSQRROCO
+#define CTM_MATH_MSQRROCO const int& rowsandcolumns = this->rows
+#endif
 
-#define CTM_MATH_MSMTY(ma0, ma1)\
+#define CTM_MATH_MSQRSMTY(ma0, ma1)\
 ma0* matrixsquaremath::squareMultiply(ma0* out, ma1* matrix, ma1* matrix1)\
 {\
-	CTM_MATH_MROCO;\
-	ma0* ret = (ma0*)calloc(rowsandcolumns * rowsandcolumns, sizeof(ma0));\
+	CTM_MATH_MSQRROCO;\
+	ma0 ret[rowsandcolumns * rowsandcolumns];\
 	for(int r = 0; r < rowsandcolumns; r++)\
 		for(int c = 0; c < rowsandcolumns; c++)\
 			for(int e = 0; e < rowsandcolumns; e++)\
@@ -16,46 +18,46 @@ ma0* matrixsquaremath::squareMultiply(ma0* out, ma1* matrix, ma1* matrix1)\
 	for(int r = 0, i = 0; r < rowsandcolumns; r++)\
 		for(int c = 0; c < rowsandcolumns; c++, i++)\
 			out[i] = ret[i];\
-	delete ret;\
 	return out;\
 }
-CTM_MATH_MSMTY(__int8, __int8)
-CTM_MATH_MSMTY(__int16, __int8)
-CTM_MATH_MSMTY(__int16, __int16)
-CTM_MATH_MSMTY(__int32, __int16)
-CTM_MATH_MSMTY(__int32, __int32)
-CTM_MATH_MSMTY(__int64, __int32)
-CTM_MATH_MSMTY(__int64, __int64)
-CTM_MATH_MSMTY(__int128, __int64)
-CTM_MATH_MSMTY(__int128, __int128)
-CTM_MATH_MSMTY(float, float)
-CTM_MATH_MSMTY(double, float)
-CTM_MATH_MSMTY(double, double)
-CTM_MATH_MSMTY(__float128, double)
-CTM_MATH_MSMTY(__float128, __float128)
+CTM_MATH_MSQRSMTY(__int8, __int8)
+CTM_MATH_MSQRSMTY(__int16, __int8)
+CTM_MATH_MSQRSMTY(__int16, __int16)
+CTM_MATH_MSQRSMTY(__int32, __int16)
+CTM_MATH_MSQRSMTY(__int32, __int32)
+CTM_MATH_MSQRSMTY(__int64, __int32)
+CTM_MATH_MSQRSMTY(__int64, __int64)
+CTM_MATH_MSQRSMTY(__int128, __int64)
+CTM_MATH_MSQRSMTY(__int128, __int128)
+CTM_MATH_MSQRSMTY(float, float)
+CTM_MATH_MSQRSMTY(double, float)
+CTM_MATH_MSQRSMTY(double, double)
+CTM_MATH_MSQRSMTY(__float128, double)
+CTM_MATH_MSQRSMTY(__float128, __float128)
 
-#define CTM_MATH_MIDTY(ma0)\
+#define CTM_MATH_MSQRIDTY(ma0)\
 ma0* matrixsquaremath::identity(ma0* out)\
 {\
-	CTM_MATH_MROCO;\
+	CTM_MATH_MSQRROCO;\
 	for(int i = 0, c = 0; c < rowsandcolumns; c++)\
 		for(int r = 0; r < rowsandcolumns; r++, i++)\
 			out[i] = c == r ? 1 : 0;\
 	return out;\
 }
-CTM_MATH_MIDTY(__int8)
-CTM_MATH_MIDTY(__int16)
-CTM_MATH_MIDTY(__int32)
-CTM_MATH_MIDTY(__int64)
-CTM_MATH_MIDTY(__int128)
-CTM_MATH_MIDTY(float)
-CTM_MATH_MIDTY(double)
-CTM_MATH_MIDTY(__float128)
+CTM_MATH_MSQRIDTY(__int8)
+CTM_MATH_MSQRIDTY(__int16)
+CTM_MATH_MSQRIDTY(__int32)
+CTM_MATH_MSQRIDTY(__int64)
+CTM_MATH_MSQRIDTY(__int128)
+CTM_MATH_MSQRIDTY(float)
+CTM_MATH_MSQRIDTY(double)
+CTM_MATH_MSQRIDTY(__float128)
 
-#define CTM_MATH_MMULTIIDTY(ma0)\
+#ifndef CTM_MATH_MSQRMULTIIDTY
+#define CTM_MATH_MSQRMULTIIDTY(ma0)\
 void matrixsquaremath::identity(const ma0&, int& count, ...)\
 {\
-	CTM_MATH_MROCO;\
+	CTM_MATH_MSQRROCO;\
 	va_list matrices;\
 	va_start(matrices, count);\
 	for(int m = 0; m < count; m++)\
@@ -66,25 +68,27 @@ void matrixsquaremath::identity(const ma0&, int& count, ...)\
 				matrix[j] = c == r ? 1 : 0;\
 	}\
 }
-CTM_MATH_MMULTIIDTY(__int8)
-CTM_MATH_MMULTIIDTY(__int16)
-CTM_MATH_MMULTIIDTY(__int32)
-CTM_MATH_MMULTIIDTY(__int64)
-CTM_MATH_MMULTIIDTY(__int128)
-CTM_MATH_MMULTIIDTY(float)
-CTM_MATH_MMULTIIDTY(double)
-CTM_MATH_MMULTIIDTY(__float128)
+CTM_MATH_MSQRMULTIIDTY(__int8)
+CTM_MATH_MSQRMULTIIDTY(__int16)
+CTM_MATH_MSQRMULTIIDTY(__int32)
+CTM_MATH_MSQRMULTIIDTY(__int64)
+CTM_MATH_MSQRMULTIIDTY(__int128)
+CTM_MATH_MSQRMULTIIDTY(float)
+CTM_MATH_MSQRMULTIIDTY(double)
+CTM_MATH_MSQRMULTIIDTY(__float128)
+#endif
 
-#define CTM_MATH_MDTRM(ma0, ma1)\
+#ifndef CTM_MATH_MSQRDTRM
+#define CTM_MATH_MSQRDTRM(ma0, ma1)\
 ma0 matrixsquaremath::determinant(const ma0&, ma1* matrix)\
 {\
-	CTM_MATH_MROCO;\
+	CTM_MATH_MSQRROCO;\
 	if(rowsandcolumns == 2)\
-		return matrix[0] * matrix[3] - matrix[1] * matrix[2];\
+		return (ma0)matrix[0] * matrix[3] - (ma0)matrix[1] * matrix[2];\
 	int usedcolumns[rowsandcolumns];\
 	bool positives[rowsandcolumns - 2];\
 	ma0 dets[rowsandcolumns - 1];\
-	for(__int32 i = 0; i < rowsandcolumns; i++)\
+	for(int i = 0; i < rowsandcolumns; i++)\
 	{\
 		if(i < rowsandcolumns - 1)\
 		{\
@@ -99,99 +103,102 @@ ma0 matrixsquaremath::determinant(const ma0&, ma1* matrix)\
 	{\
 		if(row == rowsandcolumns - 2)\
 		{\
-			int i = 0, firstColumn = -1, secondColumn = -1;\
-			while(true)\
+			int firstColumn = -1, secondColumn = -1;\
+			for(int i = 0; true; i++)\
 			{\
-				int* r = firstColumn < 0 ? &firstColumn : secondColumn < 0 ? &secondColumn : NULL;\
-				if(r == NULL)\
+				int& r;\
+				if(firstColumn < 0)\
+					r = firstColumn;\
+				else if(secondColumn < 0)\
+					r = secondColumn;\
+				else\
 					break;\
 				bool free = true;\
 				for(int j = 0; free && j < rowsandcolumns; j++)\
 					free = usedcolumns[j] != i;\
 				if(free)\
-					*r = i; i++;\
+					r = i;\
 			}\
-			dets[row] += matrix[row * rowsandcolumns + firstColumn] * matrix[(row + 1) * rowsandcolumns + secondColumn]\
-			- matrix[(row + 1) * rowsandcolumns + firstColumn] * matrix[row * rowsandcolumns + secondColumn];\
+			dets[row] += (ma0)matrix[row * rowsandcolumns + firstColumn] * matrix[(row + 1) * rowsandcolumns + secondColumn]\
+			- (ma0)matrix[(row + 1) * rowsandcolumns + firstColumn] * matrix[row * rowsandcolumns + secondColumn];\
 			row--;\
 			continue;\
 		}\
-		int* column = &usedcolumns[row];\
+		int& column = usedcolumns[row];\
 		if(row > 0)\
 		{\
-			bool* positive = &positives[row];\
-			if(*column != -1)\
+			bool& positive = positives[row];\
+			if(column != -1)\
 			{\
-				dets[row] += (*positive ? 1 : -1) * matrix[row * rowsandcolumns + *column] * dets[row + 1];\
+				dets[row] += (positive ? 1 : -1) * matrix[row * rowsandcolumns + column] * dets[row + 1];\
 				dets[row + 1] = 0;\
-				*positive = !(*positive); }\
-				int nextColumn = -1;\
-				for(int i = *column + 1; i < rowsandcolumns; i++)\
+				positive = !positive;\
+			}\
+			int nextColumn = -1;\
+			for(int i = column + 1; i < rowsandcolumns; i++)\
+			{\
+				bool free = true;\
+				for(int j = 0; free && j < row; j++)\
+					free = usedcolumns[j] != i;\
+				if(free)\
 				{\
-					bool free = true;\
-					for(int j = 0; free && j < row; j++)\
-						free = usedcolumns[j] != i;\
-					if(free)\
-					{\
-						nextColumn = i;\
-						break;\
-					}\
+					nextColumn = i;\
+					break;\
 				}\
-				*column = nextColumn;\
-				if(nextColumn == -1)\
-				{\
-					*positive = true;\
-					row--;\
-				}\
-				else\
-					row++;\
+			}\
+			column = nextColumn;\
+			if(nextColumn == -1)\
+				positive = true, row--;\
+			else\
+				row++;\
 		}\
 		else\
 		{\
-			if(*column != -1)\
+			if(column != -1)\
 			{\
-				bool* positive = &positives[0];\
-				dets[0] += (*positive ? 1 : -1) * matrix[*column] * dets[1];\
+				bool& positive = positives[0];\
+				dets[0] += (positive ? 1 : -1) * matrix[column] * dets[1];\
 				dets[1] = 0;\
-				*positive = !(*positive);\
+				positive = !positive;\
 			}\
-			if(*column == rowsandcolumns - 1)\
+			if(column == rowsandcolumns - 1)\
 				break;\
 			else\
-			{\
-				(*column)++; row++;\
-			}\
+				column++, row++;\
 		}\
 	}\
 	return dets[0];\
 }
-CTM_MATH_MDTRM(__int8, __int8)
-CTM_MATH_MDTRM(__int16, __int8)
-CTM_MATH_MDTRM(__int16, __int16)
-CTM_MATH_MDTRM(__int32, __int16)
-CTM_MATH_MDTRM(__int32, __int32)
-CTM_MATH_MDTRM(__int64, __int32)
-CTM_MATH_MDTRM(__int64, __int64)
-CTM_MATH_MDTRM(__int128, __int64)
-CTM_MATH_MDTRM(__int128, __int128)
-CTM_MATH_MDTRM(float, float)
-CTM_MATH_MDTRM(double, float)
-CTM_MATH_MDTRM(double, double)
-CTM_MATH_MDTRM(__float128, double)
-CTM_MATH_MDTRM(__float128, __float128)
+CTM_MATH_MSQRDTRM(__int8, __int8)
+CTM_MATH_MSQRDTRM(__int16, __int8)
+CTM_MATH_MSQRDTRM(__int16, __int16)
+CTM_MATH_MSQRDTRM(__int32, __int16)
+CTM_MATH_MSQRDTRM(__int32, __int32)
+CTM_MATH_MSQRDTRM(__int64, __int32)
+CTM_MATH_MSQRDTRM(__int64, __int64)
+CTM_MATH_MSQRDTRM(__int128, __int64)
+CTM_MATH_MSQRDTRM(__int128, __int128)
+CTM_MATH_MSQRDTRM(float, float)
+CTM_MATH_MSQRDTRM(double, float)
+CTM_MATH_MSQRDTRM(double, double)
+CTM_MATH_MSQRDTRM(__float128, double)
+CTM_MATH_MSQRDTRM(__float128, __float128)
+#endif
 
-#define CTM_MATH_MINVS(ma0, ma1)\
+#ifndef CTM_MATH_MSQRINVS
+#define CTM_MATH_MSQRINVS(ma0, ma1)\
 ma0* matrixsquaremath::inverse(ma0* out, ma1* matrix)\
 {\
-	CTM_MATH_MROCO;\
+	CTM_MATH_MSQRROCO;\
 	int rs[rowsandcolumns];\
 	for(int i = 0; i < rowsandcolumns; i++)\
-		rs[i] = -1; int a = 0;\
+		rs[i] = -1;\
+	int a = 0;\
 	while(true)\
 	{\
 		if(a == -1)\
 			return NULL;\
-		int r = ++rs[a];\
+		const int& r = ++rs[a];\
 		if(r == rowsandcolumns)\
 			rs[a--] = -1;\
 		else\
@@ -209,14 +216,15 @@ ma0* matrixsquaremath::inverse(ma0* out, ma1* matrix)\
 		}\
 	}\
 	ma0* ss[rowsandcolumns * rowsandcolumns];\
-	ma1* ref = matrix + rs[0] * rowsandcolumns;\
-	for(int r = 0, index = 0; r < rowsandcolumns; r++, ref = matrix + rs[r] * rowsandcolumns)\
-	for(int c = 0; c < rowsandcolumns; c++, index++)\
-	{\
-		ma0* s = ss[index] = (ma0*)calloc(rowsandcolumns + 1, sizeof(ma0));\
-		for(int e = 0; e < rowsandcolumns; e++)\
-		s[e] = ref[e]; if(r == c) s[rowsandcolumns] = -1;\
-	}\
+	for(int r = 0, index = 0; r < rowsandcolumns; r++)\
+		for(int c = 0; c < rowsandcolumns; c++, index++)\
+		{\
+			ma0* s = ss[index] = new ma0[rowsandcolumns + 1];\
+			for(int e = 0; e < rowsandcolumns; e++)\
+				s[e] = matrix[rs[r] * rowsandcolumns + e];\
+			if(r == c)\
+				s[rowsandcolumns] = -1;\
+		}\
 	for(int c = 0; c < rowsandcolumns; c++)\
 		for(int r = 0; r < rowsandcolumns; r++)\
 		{\
@@ -224,7 +232,8 @@ ma0* matrixsquaremath::inverse(ma0* out, ma1* matrix)\
 			for(int i = 0; i < r; i++)\
 				for(int j = i + 1; j <= rowsandcolumns; j++)\
 					s[j] -= s[i] * ss[i * rowsandcolumns + c][j];\
-				for(int i = r + 1; i <= rowsandcolumns; i++) s[i] /= s[r];\
+			for(int i = r + 1; i <= rowsandcolumns; i++)\
+				s[i] /= s[r];\
 		}\
 	for(int c = 0; c < rowsandcolumns; c++)\
 		for(int r = rowsandcolumns - 1; r >= 0; r--)\
@@ -241,72 +250,79 @@ ma0* matrixsquaremath::inverse(ma0* out, ma1* matrix)\
 		delete s;\
 	return out;\
 }
-CTM_MATH_MINVS(float, __int8)
-CTM_MATH_MINVS(float, __int16)
-CTM_MATH_MINVS(float, __int32)
-CTM_MATH_MINVS(float, __int64)
-CTM_MATH_MINVS(float, __int128)
-CTM_MATH_MINVS(float, float)
-CTM_MATH_MINVS(double, __int8)
-CTM_MATH_MINVS(double, __int16)
-CTM_MATH_MINVS(double, __int32)
-CTM_MATH_MINVS(double, __int64)
-CTM_MATH_MINVS(double, __int128)
-CTM_MATH_MINVS(double, float)
-CTM_MATH_MINVS(double, double)
-CTM_MATH_MINVS(__float128, __int8)
-CTM_MATH_MINVS(__float128, __int16)
-CTM_MATH_MINVS(__float128, __int32)
-CTM_MATH_MINVS(__float128, __int64)
-CTM_MATH_MINVS(__float128, __int128)
-CTM_MATH_MINVS(__float128, float)
-CTM_MATH_MINVS(__float128, double)
-CTM_MATH_MINVS(__float128, __float128)
+CTM_MATH_MSQRINVS(float, __int8)
+CTM_MATH_MSQRINVS(float, __int16)
+CTM_MATH_MSQRINVS(float, __int32)
+CTM_MATH_MSQRINVS(float, __int64)
+CTM_MATH_MSQRINVS(float, __int128)
+CTM_MATH_MSQRINVS(float, float)
+CTM_MATH_MSQRINVS(double, __int8)
+CTM_MATH_MSQRINVS(double, __int16)
+CTM_MATH_MSQRINVS(double, __int32)
+CTM_MATH_MSQRINVS(double, __int64)
+CTM_MATH_MSQRINVS(double, __int128)
+CTM_MATH_MSQRINVS(double, float)
+CTM_MATH_MSQRINVS(double, double)
+CTM_MATH_MSQRINVS(__float128, __int8)
+CTM_MATH_MSQRINVS(__float128, __int16)
+CTM_MATH_MSQRINVS(__float128, __int32)
+CTM_MATH_MSQRINVS(__float128, __int64)
+CTM_MATH_MSQRINVS(__float128, __int128)
+CTM_MATH_MSQRINVS(__float128, float)
+CTM_MATH_MSQRINVS(__float128, double)
+CTM_MATH_MSQRINVS(__float128, __float128)
+#endif
 
-#define CTM_MATH_MTRSL(ma0, ma1, ma2)\
+#ifndef CTM_MATH_MSQRTRSL
+#define CTM_MATH_MSQRTRSL(ma0, ma1, ma2)\
 ma0* matrixsquaremath::translate(ma0* out, ma1* matrix, ma2* vector)\
 {\
-	CTM_MATH_MROCO;\
+	CTM_MATH_MSQRROCO;\
 	for(int c = 0, b = rowsandcolumns * (rowsandcolumns - 1); c < rowsandcolumns; c++, b++)\
 	{\
-		ma1 e = matrix[b];\
+		ma0 e = matrix[b];\
 		for(int r = 0, i = c; r < rowsandcolumns - 1; r++, i += rowsandcolumns)\
-			e += (out[i] = matrix[i]) * vector[r];\
+			e += (ma0)vector[r] * (out[i] = matrix[i]);\
 		out[b] = e;\
 	}\
 	return out;\
 }
-#define CTM_MATH_MTRSL_0(ma0, ma1) CTM_MATH_MTRSL(ma0, ma1, ma1)
-#define CTM_MATH_MTRSL_1(ma0, ma1) CTM_MATH_MTRSL(ma0, ma1, ma0)
-CTM_MATH_MTRSL_0(__int8, __int8)
-CTM_MATH_MTRSL_0(__int16, __int8)
-CTM_MATH_MTRSL_0(__int16, __int16)
-CTM_MATH_MTRSL_0(__int32, __int16)
-CTM_MATH_MTRSL_0(__int32, __int32)
-CTM_MATH_MTRSL_0(__int64, __int32)
-CTM_MATH_MTRSL_0(__int64, __int64)
-CTM_MATH_MTRSL_0(__int128, __int64)
-CTM_MATH_MTRSL_0(__int128, __int128)
-CTM_MATH_MTRSL_1(float, __int8)
-CTM_MATH_MTRSL_1(float, __int16)
-CTM_MATH_MTRSL_1(float, __int32)
-CTM_MATH_MTRSL_1(float, __int64)
-CTM_MATH_MTRSL_1(float, __int128)
-CTM_MATH_MTRSL_1(float, float)
-CTM_MATH_MTRSL_0(double, float)
-CTM_MATH_MTRSL_1(double, __int8)
-CTM_MATH_MTRSL_1(double, __int16)
-CTM_MATH_MTRSL_1(double, __int32)
-CTM_MATH_MTRSL_1(double, __int64)
-CTM_MATH_MTRSL_1(double, __int128)
-CTM_MATH_MTRSL_1(double, float)
-CTM_MATH_MTRSL_1(double, double)
-CTM_MATH_MTRSL_0(__float128, double)
-CTM_MATH_MTRSL_1(__float128, __int8)
-CTM_MATH_MTRSL_1(__float128, __int16)
-CTM_MATH_MTRSL_1(__float128, __int32)
-CTM_MATH_MTRSL_1(__float128, __int64)
-CTM_MATH_MTRSL_1(__float128, __int128)
-CTM_MATH_MTRSL_1(__float128, float)
-CTM_MATH_MTRSL_1(__float128, double)
-CTM_MATH_MTRSL_1(__float128, __float128)
+#ifndef CTM_MATH_MSQRTRSL_0
+#define CTM_MATH_MSQRTRSL_0(ma0, ma1) CTM_MATH_MSQRTRSL(ma0, ma1, ma1)
+#endif
+#ifndef CTM_MATH_MSQRTRSL_1
+#define CTM_MATH_MSQRTRSL_1(ma0, ma1) CTM_MATH_MSQRTRSL(ma0, ma1, ma0)
+#endif
+CTM_MATH_MSQRTRSL_0(__int8, __int8)
+CTM_MATH_MSQRTRSL_0(__int16, __int8)
+CTM_MATH_MSQRTRSL_0(__int16, __int16)
+CTM_MATH_MSQRTRSL_0(__int32, __int16)
+CTM_MATH_MSQRTRSL_0(__int32, __int32)
+CTM_MATH_MSQRTRSL_0(__int64, __int32)
+CTM_MATH_MSQRTRSL_0(__int64, __int64)
+CTM_MATH_MSQRTRSL_0(__int128, __int64)
+CTM_MATH_MSQRTRSL_0(__int128, __int128)
+CTM_MATH_MSQRTRSL_1(float, __int8)
+CTM_MATH_MSQRTRSL_1(float, __int16)
+CTM_MATH_MSQRTRSL_1(float, __int32)
+CTM_MATH_MSQRTRSL_1(float, __int64)
+CTM_MATH_MSQRTRSL_1(float, __int128)
+CTM_MATH_MSQRTRSL_1(float, float)
+CTM_MATH_MSQRTRSL_0(double, float)
+CTM_MATH_MSQRTRSL_1(double, __int8)
+CTM_MATH_MSQRTRSL_1(double, __int16)
+CTM_MATH_MSQRTRSL_1(double, __int32)
+CTM_MATH_MSQRTRSL_1(double, __int64)
+CTM_MATH_MSQRTRSL_1(double, __int128)
+CTM_MATH_MSQRTRSL_1(double, float)
+CTM_MATH_MSQRTRSL_1(double, double)
+CTM_MATH_MSQRTRSL_0(__float128, double)
+CTM_MATH_MSQRTRSL_1(__float128, __int8)
+CTM_MATH_MSQRTRSL_1(__float128, __int16)
+CTM_MATH_MSQRTRSL_1(__float128, __int32)
+CTM_MATH_MSQRTRSL_1(__float128, __int64)
+CTM_MATH_MSQRTRSL_1(__float128, __int128)
+CTM_MATH_MSQRTRSL_1(__float128, float)
+CTM_MATH_MSQRTRSL_1(__float128, double)
+CTM_MATH_MSQRTRSL_1(__float128, __float128)
+#endif
