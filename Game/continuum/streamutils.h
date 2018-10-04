@@ -35,12 +35,13 @@ namespace ctm
 
 			const size_t& getlimit();
 			const size_t& setlimit(const size_t& limit);
+			size_t remaining();
 
 			operator bitposition&() const;
 			operator const size_t&();
-			byteposition& operator ++(int);
+			size_t operator ++(int);
 			byteposition& operator ++();
-			byteposition& operator --(int);
+			size_t operator --(int);
 			byteposition& operator --();
 			byteposition& operator +=(const size_t& by);
 			byteposition& operator -=(const size_t& by);
@@ -74,12 +75,13 @@ namespace ctm
 
 			const lsize_t& getlimit();
 			const lsize_t& setlimit(const lsize_t& limit);
+			size_t remaining();
 
 			operator byteposition&() const;
 			operator const lsize_t&();
-			bitposition& operator ++(int);
+			lsize_t operator ++(int);
 			bitposition& operator ++();
-			bitposition& operator --(int);
+			lsize_t operator --(int);
 			bitposition& operator --();
 			bitposition& operator +=(const lsize_t& by);
 			bitposition& operator -=(const lsize_t& by);
