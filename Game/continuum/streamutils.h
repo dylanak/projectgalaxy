@@ -38,7 +38,6 @@ namespace ctm
 
 			operator bitposition&() const;
 			operator const size_t&();
-			operator bool();
 			byteposition& operator ++(int);
 			byteposition& operator ++();
 			byteposition& operator --(int);
@@ -78,7 +77,6 @@ namespace ctm
 
 			operator byteposition&() const;
 			operator const lsize_t&();
-			operator bool();
 			bitposition& operator ++(int);
 			bitposition& operator ++();
 			bitposition& operator --(int);

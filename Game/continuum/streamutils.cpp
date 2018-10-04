@@ -14,7 +14,6 @@ const size_t& byteposition::setlimit(const size_t& limit) { if(this->limit != li
 
 byteposition::operator bitposition&() const { return *(this->bip); }
 byteposition::operator const size_t&() { this->update(); return this->pos; }
-byteposition::operator bool() { return this->limit > this->pos; }
 byteposition& byteposition::operator ++(int) { return ++(*this); }
 byteposition& byteposition::operator ++() { this->update(); if(this->pos != this->limit) this->pos++; this->bip->updatepos = true; return *this; }
 byteposition& byteposition::operator --(int) { return --(*this); }
@@ -36,7 +35,6 @@ const lsize_t& bitposition::setlimit(const lsize_t& limit) { if(this->limit != l
 
 bitposition::operator byteposition&() const { return *(this->byp); }
 bitposition::operator const lsize_t&() { this->update(); return this->pos; }
-bitposition::operator bool() { return this->limit > this->pos; }
 bitposition& bitposition::operator ++(int) { return ++(*this); }
 bitposition& bitposition::operator ++() { this->update(); if(this->pos != this->limit) this->pos++; this->byp->updatepos = true; return *this; }
 bitposition& bitposition::operator --(int) { return --(*this); }
