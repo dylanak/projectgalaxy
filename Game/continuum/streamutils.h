@@ -5,8 +5,8 @@
 
 typedef unsigned __int128 lsize_t;
 
-const size_t SIZE_LIMIT = std::numeric_limits<size_t>::max();
-const lsize_t LSIZE_LIMIT = std::numeric_limits<lsize_t>::max();
+extern const size_t size_limit;
+extern const lsize_t lsize_limit;
 
 namespace ctm
 {
