@@ -24,8 +24,6 @@ namespace ctm
 			bool updatelimit;
 			bool deconstructing = false;
 
-			void update();
-
 			byteposition& operator=(const byteposition&);
 		public:
 			byteposition();
@@ -63,8 +61,6 @@ namespace ctm
 			bool updatepos;
 			bool updatelimit;
 			bool deconstructing = false;
-
-			void update();
 
 			bitposition& operator=(const bitposition&);
 		public:
