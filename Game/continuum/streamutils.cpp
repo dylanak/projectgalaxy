@@ -40,7 +40,7 @@ bitposition::~bitposition() { this->deconstructing = true; if(!this->byp->decons
 #endif
 const lsize_t& bitposition::getlimit() { CTM_STREAM_BITUPDATE; return this->limit; }
 const lsize_t& bitposition::setlimit(const lsize_t& limit) { if(this->limit != limit) { this->updatelimit = false; if(this->updatepos) { this->pos = (lsize_t)this->byp->pos * 8; this->updatepos = false; } if(this->pos > limit) { this->pos = limit; this->byp->updatepos = true; } this->limit = limit; this->byp->updatelimit = true; } return limit; }
-size_t bitposition::remaining() { CTM_STREAM_BITUPDATE; return this->limit - this->pos; }
+lsize_t bitposition::remaining() { CTM_STREAM_BITUPDATE; return this->limit - this->pos; }
 
 bitposition::operator byteposition&() const { return *(this->byp); }
 bitposition::operator const lsize_t&() { CTM_STREAM_BITUPDATE; return this->pos; }

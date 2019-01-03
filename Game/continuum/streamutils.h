@@ -71,7 +71,7 @@ namespace ctm
 
 			const lsize_t& getlimit();
 			const lsize_t& setlimit(const lsize_t& limit);
-			size_t remaining();
+			lsize_t remaining();
 
 			operator byteposition&() const;
 			operator const lsize_t&();
