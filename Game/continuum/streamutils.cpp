@@ -51,3 +51,8 @@ bitposition& bitposition::operator --() { CTM_STREAM_BITUPDATE; if(this->pos != 
 bitposition& bitposition::operator +=(const lsize_t& by) { CTM_STREAM_BITUPDATE; if(this->limit - by > this->pos) this->pos += by; else this->pos = this->limit; this->byp->updatepos = true; this->byp->updatepos = true; return *this; }
 bitposition& bitposition::operator -=(const lsize_t& by) { CTM_STREAM_BITUPDATE; if(by < this->pos) this->pos -= by; else this->pos = 0; this->byp->updatepos = true; return *this; }
 bitposition& bitposition::operator =(const lsize_t& to) { this->updatepos = false; if(this->limit > to) this->pos = to; else this->pos = this->limit; this->byp->updatepos = true; return *this; }
+
+bool readbit(const uint8_t* const buffer, bitposition& bi)
+{
+	return (buffer[(byteposition&)bi] >> (bi & 7)) & 1;
+}

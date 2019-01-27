@@ -2,6 +2,7 @@
 #define _CTM_STREAMUTILS_H
 #include <crtdefs.h>
 #include <limits>
+#include <stdint.h>
 
 typedef unsigned __int128 lsize_t;
 
@@ -85,5 +86,28 @@ namespace ctm
 
 			friend class byteposition;
 	};
+
+	template<class T, T d = 0>
+	T readbytesequence(const uint8_t* const buffer, byteposition& by, const size_t& bytes)
+	{
+		T t = d;
+		lsize_t bits = (lsize_t)bytes * 8;
+		for(lsize_t i = 0; i < bits; i += 8)
+			t |= (buffer[by++] << i);
+		return (t & ~(~0 << (bytes * 8))) | d;
+	}
+	bool readbit(const uint8_t* const buffer, bitposition& bi);
+	template<class T, T d = 0>
+	T readbitsequence(const uint8_t* const buffer, bitposition& bi, const lsize_t& bits)
+	{
+		T t = d;
+		byteposition& by = bi;
+		uint8_t firstbits = bi & 7;
+		if(firstbits != 0)
+			t |= buffer[by++] >> (firstbits);
+		for(lsize_t i = (8 - firstbits) & 7; i < bits; bi += std::min<lsize_t>(8, bits - i), i += 8)
+			t |= (buffer[by] << i);
+		return (t & ~(~0 << bits)) | d;
+	}
 }
 #endif
