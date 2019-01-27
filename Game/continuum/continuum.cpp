@@ -1,11 +1,10 @@
 #include "continuum.h"
 
-using namespace ctm;
-
 namespace ctm
 {
 	continuum::continuum()
 	{
+		exception::registerexception(E_CTM_CRASH, [](void* const) -> std::string { return "game crash!"; });
 		glfwSetErrorCallback([](int error, const char* desc)
 		{
 			//TODO #1" improve logging
@@ -157,16 +156,18 @@ namespace ctm
 
 int main(int argcount, char** args)
 {
-	continuum* ctm = new continuum();
-	int code = 0;
+	ctm::continuum* game = NULL;
 	try
 	{
-		ctm->run();
+		game = new ctm::continuum();
+		game->run();
+		delete game;
 	}
-	catch(int error)
+	catch(...)
 	{
-		code = error;
+		std::cerr << ctm::exception(E_CTM_CRASH, NULL, std::current_exception()).what() << std::endl;
 	}
-	delete ctm;
-	return code;
+	if(game)
+	{
+	}
 }
